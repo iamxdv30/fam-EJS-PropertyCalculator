@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Payment Calculator</title>
+    <style>
+        /* Previous CSS styles remain the same */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+                max-width: 800px;
+            }
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            table {
+                font-size: 12px;
+            }
+        }
+        
+        th, td {
+            padding: 8px 4px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        @media (min-width: 768px) {
+            th, td {
+                padding: 8px;
+            }
+        }
+        
+        .header {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        
+        .subtotal {
+            font-weight: bold;
+        }
+        
+        .total {
+            font-weight: bold;
+            background-color: #ffff00;
+        }
+        
+        .highlight {
+            background-color: #ffff00;
+        }
+        
+        .indent {
+            padding-left: 20px;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            flex: 1 0 100%;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .control-group {
+                flex: 1 0 45%;
+                margin-right: 5%;
+            }
+        }
+        
+        select, input {
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            button {
+                width: auto;
+                margin-top: 20px;
+            }
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .installment-schedule {
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 768px) {
+            .installment-schedule {
+                width: 50%;
+            }
+        }
+        
+        h2, h3 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous HTML structure remains the same until the installment schedule table -->
+    <h2>Property Payment Calculator</h2>
+    
+    <div class="controls">
+        <div class="control-group">
+            <label for="askingPrice">Original Asking Price (PHP):</label>
+            <input type="number" id="askingPrice" value="500000" min="0" step="1000">
+        </div>
+        
+        <div class="control-group">
+            <label for="term">Term:</label>
+            <select id="term">
+                <option value="3">3 Months</option>
+                <option value="6">6 Months</option>
+                <option value="9" selected>9 Months</option>
+                <option value="12">12 Months</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="initialPayment">Initial Payment (PHP):</label>
+            <input type="number" id="initialPayment" value="150000" min="0" step="1000">
+        </div>
+        
+        <div class="control-group">
+            <button onclick="calculatePayments()">Calculate</button>
+        </div>
+    </div>
+    
+    <table>
+        <tr>
+            <td class="header">Original Asking Price</td>
+            <td class="header" id="price">PHP 500,000.00</td>
+        </tr>
+        <tr>
+            <td colspan="2">Deduction:</td>
+        </tr>
+        <tr>
+            <td class="indent">Legal Documents</td>
+            <td id="legalDocs">PHP 6,000.00</td>
+        </tr>
+        <tr>
+            <td class="indent">Capital Gains Tax (CGT) 6%</td>
+            <td id="cgt">PHP 30,000.00</td>
+        </tr>
+        <tr>
+            <td class="subtotal">Subtotal</td>
+            <td id="deductionSubtotal">PHP 36,000.00</td>
+        </tr>
+        <tr>
+            <td class="header">Total</td>
+            <td class="total" id="deductionTotal">PHP 464,000.00</td>
+        </tr>
+    </table>
+    
+    <h3>Initial Downpayment</h3>
+    <table>
+        <tr>
+            <td colspan="2">Batch 1 Partition (66.6666%)</td>
+        </tr>
+        <tr>
+            <td class="indent">Vangie</td>
+            <td id="vangie1">PHP 33,333.33</td>
+        </tr>
+        <tr>
+            <td class="indent">Doy</td>
+            <td id="doy1">PHP 33,333.33</td>
+        </tr>
+        <tr>
+            <td class="indent">Romy</td>
+            <td id="romy1">PHP 33,333.33</td>
+        </tr>
+        <tr>
+            <td class="subtotal">Subtotal</td>
+            <td id="batch1Subtotal">PHP 100,000.00</td>
+        </tr>
+    </table>
+    
+    <div class="note">*After processing of legal documents</div>
+    <table>
+        <tr>
+            <td colspan="2">Batch 2 Partition (33.3333%)</td>
+        </tr>
+        <tr>
+            <td class="indent">Vangie</td>
+            <td id="vangie2">PHP 16,666.67</td>
+        </tr>
+        <tr>
+            <td class="indent">Doy</td>
+            <td id="doy2">PHP 16,666.67</td>
+        </tr>
+        <tr>
+            <td class="indent">Romy</td>
+            <td id="romy2">PHP 16,666.67</td>
+        </tr>
+        <tr>
+            <td class="subtotal">Subtotal</td>
+            <td id="batch2Subtotal">PHP 50,000.00</td>
+        </tr>
+        <tr>
+            <td class="header">Total</td>
+            <td class="total" id="initialTotal">PHP 150,000.00</td>
+        </tr>
+    </table>
+    
+    <h3>Balance Remaining</h3>
+    <table>
+        <tr>
+            <td class="header">Balance Remaining</td>
+            <td class="header highlight" id="balance">PHP 314,000.00</td>
+        </tr>
+        <tr>
+            <td>Partition Per Person</td>
+            <td class="highlight" id="partitionPP">PHP 104,666.67</td>
+        </tr>
+        <tr>
+            <td>Billing Cycle</td>
+            <td id="billingCycle">Quarterly</td>
+        </tr>
+        <tr>
+            <td>Terms</td>
+            <td id="termDisplay">9 Months</td>
+        </tr>
+    </table>
+
+    <h3>Installment Schedule per Person</h3>
+    <table class="installment-schedule" id="installmentTable">
+        <tr id="payment1">
+            <td>Q1</td>
+            <td id="q1">PHP 34,888.89</td>
+        </tr>
+        <tr id="payment2">
+            <td>Q2</td>
+            <td id="q2">PHP 34,888.89</td>
+        </tr>
+        <tr id="payment3">
+            <td>Q3</td>
+            <td id="q3">PHP 34,888.89</td>
+        </tr>
+        <tr id="payment4">
+            <td>Q4</td>
+            <td id="q4">PHP 34,888.89</td>
+        </tr>
+        <tr>
+            <td class="subtotal">Total</td>
+            <td class="total" id="installmentTotal">PHP 104,666.67</td>
+        </tr>
+    </table>
+
+    <script>
+        function formatCurrency(amount) {
+            return 'PHP ' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+        
+        function calculatePayments() {
+            try {
+                const askingPrice = parseFloat(document.getElementById('askingPrice').value) || 0;
+                const termMonths = parseInt(document.getElementById('term').value) || 9;
+                const initialPaymentTotal = parseFloat(document.getElementById('initialPayment').value) || 150000;
+                
+                // Validate initial payment is not greater than asking price
+                if (initialPaymentTotal > askingPrice) {
+                    alert("Initial payment cannot be greater than the asking price");
+                    return;
+                }
+                
+                // Calculate deductions
+                const legalDocs = askingPrice * 0.012;
+                const cgtRate = 0.06;
+                const cgtAmount = askingPrice * cgtRate;
+                
+                const deductionSubtotal = legalDocs + cgtAmount;
+                const deductionTotal = askingPrice - deductionSubtotal;
+                const batch1Total = initialPaymentTotal * (2/3);
+                const batch1PerPerson = batch1Total / 3;
+                const batch2Total = initialPaymentTotal * (1/3);
+                const batch2PerPerson = batch2Total / 3;
+                
+                const balanceRemaining = askingPrice - deductionSubtotal - initialPaymentTotal;
+                const partitionPerPerson = balanceRemaining / 3;
+
+                // Set billing cycle and number of payments based on term
+                let billingCycle = "Quarterly";
+                let numberOfPayments = 3; // default
+
+                if (termMonths === 6) {
+                    billingCycle = "Semi-Annual";
+                    numberOfPayments = 2;
+                } else if (termMonths === 12) {
+                    billingCycle = "Quarterly";
+                    numberOfPayments = 4;
+                } else if (termMonths === 3) {
+                    billingCycle = "Quarterly";
+                    numberOfPayments = 1;
+                }
+
+                // Hide/show payment rows based on number of payments
+                for (let i = 1; i <= 4; i++) {
+                    const paymentRow = document.getElementById(`payment${i}`);
+                    if (i <= numberOfPayments) {
+                        paymentRow.style.display = "";
+                    } else {
+                        paymentRow.style.display = "none";
+                    }
+                }
+
+                // Calculate and display payment amounts
+                const paymentAmount = partitionPerPerson / numberOfPayments;
+
+                // Update payment labels and amounts
+                for (let i = 1; i <= numberOfPayments; i++) {
+                    const paymentLabel = document.getElementById(`q${i}`).previousElementSibling;
+                    const paymentAmount = partitionPerPerson / numberOfPayments;
+                    
+                    if (billingCycle === "Semi-Annual") {
+                        paymentLabel.textContent = i === 1 ? "1st Half" : "2nd Half";
+                    } else {
+                        paymentLabel.textContent = `Q${i}`;
+                    }
+                    
+                    document.getElementById(`q${i}`).textContent = formatCurrency(paymentAmount);
+                }
+
+                // Update all display values
+                document.getElementById('price').textContent = formatCurrency(askingPrice);
+                document.getElementById('legalDocs').textContent = formatCurrency(legalDocs);
+                document.getElementById('cgt').textContent = formatCurrency(cgtAmount);
+                document.getElementById('deductionSubtotal').textContent = formatCurrency(deductionSubtotal);
+                document.getElementById('deductionTotal').textContent = formatCurrency(deductionTotal);
+                
+                document.getElementById('vangie1').textContent = formatCurrency(batch1PerPerson);
+                document.getElementById('doy1').textContent = formatCurrency(batch1PerPerson);
+                document.getElementById('romy1').textContent = formatCurrency(batch1PerPerson);
+                document.getElementById('batch1Subtotal').textContent = formatCurrency(batch1Total);
+                
+                document.getElementById('vangie2').textContent = formatCurrency(batch2PerPerson);
+                document.getElementById('doy2').textContent = formatCurrency(batch2PerPerson);
+                document.getElementById('romy2').textContent = formatCurrency(batch2PerPerson);
+                document.getElementById('batch2Subtotal').textContent = formatCurrency(batch2Total);
+                document.getElementById('initialTotal').textContent = formatCurrency(initialPaymentTotal);
+                
+                document.getElementById('balance').textContent = formatCurrency(balanceRemaining);
+                document.getElementById('partitionPP').textContent = formatCurrency(partitionPerPerson);
+                document.getElementById('billingCycle').textContent = billingCycle;
+                document.getElementById('termDisplay').textContent = termMonths + ' Months';
+                document.getElementById('installmentTotal').textContent = formatCurrency(partitionPerPerson);
+                
+            } catch (error) {
+                console.error("Error in calculation:", error);
+                alert("An error occurred while calculating. Please check the values and try again.");
+            }
+        }
+        
+        // Calculate initial values when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            calculatePayments();
+        });
+    </script>
+</body>
+</html>
