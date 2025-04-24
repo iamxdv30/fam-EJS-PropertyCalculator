@@ -10,9 +10,9 @@
 </head>
 <body>
     <!-- Previous HTML structure remains the same until the installment schedule table -->
-    <h2>Property Payment Calculator</h2>
+    <h2 class="no-print">Property Payment Calculator</h2>
     
-    <div class="controls">
+    <div class="controls no-print">
         <div class="control-group">
             <label for="askingPrice">Original Asking Price (PHP):</label>
             <input type="number" id="askingPrice" value="500000" min="0" step="1000">
@@ -38,32 +38,32 @@
         </div>
     </div>
     
+    <div style="margin-bottom: 20px;" class="no-print"> 
+        <button onclick="window.print()">Print Page</button>
+    </div>
+    
     <table id="deductionTable">
         <tr>
-            <td class="header">Original Asking Price</td>
-            <td class="header" id="price">PHP 500,000.00</td>
+            <td class="header" style="width:30%">Original Asking Price</td>
+            <td class="header" id="price" style="width:20%" colspan="2">PHP 500,000.00</td>
         </tr>
         <tr>
-            <td colspan="3" style="font-weight: bold; font-size: 20px">Deduction:</td>
+            <td colspan="3" style="font-weight: bold; font-size: 20px; text-align: left;">Deduction:</td>
         </tr>
         <tr>
             <th style="width:30%">Name</th>
             <th style="width:20%">Amount</th>
-            <th style="width:20%" class="action-column">Action</th>
+            <th style="width:20%" class="action-column no-print">Action</th>
         </tr>
         <tbody id="deductionRows">
             <tr>
                 <td><input type="text" value="Legal Documents" class="deduction-name" /></td>
                 <td><input type="number" value="6000" class="deduction-amount" min="0" step="any" /></td>
-                <td><button type="button" class="delete-deduction danger" onclick="removeDeductionRow(this)">Delete</button></td>
+                <td class="no-print"><button type="button" class="delete-deduction danger" onclick="removeDeductionRow(this)">Delete</button></td>
             </tr>
         </tbody>
         <tr>
-            <td colspan="3"><button type="button" onclick="addDeductionRow()">Add Deduction</button></td>
-        </tr>
-        <tr>
-            <td colspan="2" class="subtotal">Subtotal</td>
-            <td id="deductionSubtotal">PHP 0.00</td>
+            <td colspan="3" class="no-print" style="text-align: left;"><button type="button" onclick="addDeductionRow()">Add Deduction</button></td>
         </tr>
         <tr>
             <td colspan="2" class="header">Total</td>
@@ -75,7 +75,7 @@
     <h3>Initial Downpayment</h3>
     <table>
         <tr>
-            <td colspan="2">Batch 1 Partition (66.6666%)</td>
+            <td colspan="2" class="header" style="font-weight: bold; width:30%">Batch 1 Partition (66.6666%)</td>
         </tr>
         <tr>
             <td class="indent">Vangie</td>
@@ -98,7 +98,7 @@
     <div class="note">*After processing of legal documents</div>
     <table>
         <tr>
-            <td colspan="2">Batch 2 Partition (33.3333%)</td>
+            <td colspan="2" class="header" style="font-weight: bold; width:30%">Batch 2 Partition (33.3333%)</td>
         </tr>
         <tr>
             <td class="indent">Vangie</td>

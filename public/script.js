@@ -8,7 +8,7 @@ function addDeductionRow() {
     row.innerHTML = `
         <td><input type="text" class="deduction-name" /></td>
         <td><input type="number" class="deduction-amount" min="0" step="any" value="0" /></td>
-        <td><button type="button" class="delete-deduction danger" onclick="removeDeductionRow(this)">Delete</button></td>
+        <td class="no-print"><button type="button" class="delete-deduction danger" onclick="removeDeductionRow(this)">Delete</button></td>
     `;
     tbody.appendChild(row);
     attachDeductionListeners();
@@ -106,7 +106,6 @@ const initialPaymentTotal = parseFloat(document.getElementById('initialPayment')
 
         // Update all display values
         document.getElementById('price').textContent = formatCurrency(askingPrice);
-        document.getElementById('deductionSubtotal').textContent = formatCurrency(deductionSubtotal);
         document.getElementById('deductionTotal').textContent = formatCurrency(deductionTotal);
 
         document.getElementById('vangie1').textContent = formatCurrency(batch1PerPerson);

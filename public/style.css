@@ -154,3 +154,62 @@ h2, h3 {
     margin-top: 20px;
     margin-bottom: 10px;
 }
+
+/* Add print-specific styles */
+@media print {
+    body {
+        padding: 10px; /* Adjust padding for print if needed */
+        max-width: 100%;
+        font-size: 11pt !important;
+        color: black !important;
+        background-color: white !important;
+    }
+
+    .no-print {
+        display: none !important; /* Hide elements marked for no printing */
+    }
+
+    /* Make inputs look like static text */
+    input[type="text"],
+    input[type="number"],
+    select { /* Also hide select dropdowns */
+        border: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        -webkit-appearance: none; /* Remove default browser styling */
+        -moz-appearance: none;
+        appearance: none;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: auto !important; /* Allow content to determine width */
+        display: inline !important;
+        color: black !important; /* Ensure text color is visible */
+        font-size: inherit !important; /* Use parent font size */
+        font-family: inherit !important; /* Use parent font family */
+    }
+
+    /* Optional: Remove the arrows from number inputs */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type=number] {
+        -moz-appearance: textfield; /* Firefox */
+    }
+
+    table, th, td {
+        border: 1px solid #ccc; /* Add borders for print visibility if desired */
+        font-size: 10pt; /* Adjust font size for print */
+    }
+
+    /* Ensure table layouts are simple for print */
+    .controls, .control-group {
+        display: block; 
+    }
+
+    /* Hide specific columns if necessary */
+    #deductionTable .action-column {
+        display: none;
+    }
+}
