@@ -628,3 +628,65 @@ h2, h3 {
         }
     }
 }
+
+@media print {
+    /* Center or right-align all amount fields */
+    #deductionTotal, 
+    #balance, 
+    #partitionPP, 
+    #batch1Subtotal,
+    #batch2Subtotal,
+    #initialTotal,
+    #installmentTotal,
+    td:nth-child(2):not(.action-column),
+    .payment-amount-print,
+    .subtotal-amount,
+    input.deduction-amount + span.print-only,
+    td:nth-child(2) span.print-only {
+        text-align: right !important;
+        padding-right: 15px !important;
+    }
+    
+    /* Special fixes for installment schedule amounts */
+    .installment-schedule td:nth-child(2),
+    #installmentRows td:nth-child(2),
+    #installmentTable tfoot td:nth-child(2) {
+        text-align: right !important;
+        padding-right: 15px !important;
+    }
+    
+    /* Fix for amount cells with colspan */
+    td.total[colspan="2"],
+    td.subtotal-amount[colspan="2"] {
+        text-align: right !important;
+        padding-right: 15px !important;
+    }
+    
+    /* Make sure amounts don't get cut off */
+    td.payment-amount-cell,
+    td:nth-child(2):not(.action-column) {
+        overflow: visible !important;
+        white-space: normal !important;
+        word-wrap: normal !important;
+    }
+    
+    /* Format currency values consistently */
+    #deductionTotal, 
+    #balance, 
+    #partitionPP, 
+    #batch1Subtotal,
+    #batch2Subtotal,
+    #initialTotal,
+    #installmentTotal,
+    .payment-amount-print {
+        font-weight: normal !important;
+    }
+    
+    /* Special treatment for highlighted amounts */
+    .highlight, 
+    .total {
+        text-align: right !important;
+        padding-right: 15px !important;
+        font-weight: bold !important;
+    }
+}
