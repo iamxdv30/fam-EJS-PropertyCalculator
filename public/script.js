@@ -30,15 +30,15 @@ function loadDeductions() {
         deductions.forEach(deduction => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>
-                    <input type="text" class="deduction-name" value="${deduction.name || ''}"/>
-                    <span class="print-only">${deduction.name || ''}</span>
+                <td style="width:40%">
+                    <input type="text" class="deduction-name" />
+                    <span class="print-only"></span>
                 </td>
-                <td>
-                    <input type="text" class="deduction-amount" value="${formatNumber(deduction.amount || 0)}" />
-                    <span class="print-only">${formatNumber(deduction.amount || 0)}</span>
+                <td style="width:60%">
+                    <input type="text" class="deduction-amount" value="0.00" />
+                    <span class="print-only">0.00</span>
                 </td>
-                <td class="no-print action-column"><button type="button" class="delete-deduction danger" onclick="removeDeductionRow(this)">Delete</button></td>
+                <td style="width:0%" class="no-print action-column"><button type="button" class="delete-deduction danger no-print" onclick="removeDeductionRow(this)">Delete</button></td>
             `;
             tbody.appendChild(row);
         });
@@ -49,10 +49,6 @@ function loadDeductions() {
 
 function formatCurrency(amount) {
     return 'PHP ' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-}
-
-function roundToFive(num) {
-    return Math.round(num / 5) * 5;
 }
 
 function formatNumber(amount) {
@@ -286,7 +282,7 @@ function calculatePayments() {
         const uniqueInitialCount = uniqueInitialNames.size;
 
         // Calculate partition amount per unique person
-        const partitionAmount = uniqueInitialCount > 0 ? roundToFive(balance / uniqueInitialCount) : 0;
+        const partitionAmount = uniqueInitialCount > 0 ? balance / uniqueInitialCount : 0;
 
         // Update balance and partition displays
         document.getElementById('balance').textContent = formatCurrency(balance);
@@ -304,8 +300,8 @@ function calculatePayments() {
         const installmentRows = document.getElementById('installmentRows');
         installmentRows.innerHTML = ''; // Clear existing rows
         
-        // Calculate equal installment amounts (rounded to nearest 5)
-        const baseInstallmentAmount = roundToFive(partitionAmount / numberOfPayments);
+        // Calculate equal installment amounts
+        const baseInstallmentAmount = partitionAmount / numberOfPayments;
         let remainingAmount = partitionAmount;
         
         // Add rows for each quarter
@@ -323,8 +319,8 @@ function calculatePayments() {
             remainingAmount -= baseInstallmentAmount;
                 
             row.innerHTML = `
-                <td>${label}</td>
-                <td id="q${i}">${formatCurrency(currentInstallment)}</td>
+                <td style="width:40%">${label}</td>
+                <td style="width:60%" id="q${i}">${formatCurrency(currentInstallment)}</td>
             `;
             installmentRows.appendChild(row);
         }
@@ -412,16 +408,15 @@ function addPaymentRow(batchId) {
     const tbody = document.getElementById(`${batchId}Rows`);
     const row = document.createElement('tr');
     row.innerHTML = `
-        <td>
+        <td style="width:40%">
             <input type="text" class="payment-name" maxlength="30" />
             <span class="print-only"></span>
         </td>
-        <td class="payment-amount-cell">
+        <td style="width:60%" class="payment-amount-cell">
             <span class="payment-amount no-print">PHP 0.00</span>
             <span class="payment-amount-print print-only"></span>
-        </td>
-        <td class="no-print action-column">
-            <button type="button" class="delete-payment danger" onclick="removePaymentRow(this, '${batchId}')">Delete</button>
+        <td style="width:0%" class="no-print action-column">
+            <button type="button" class="delete-payment danger no-print" onclick="removePaymentRow(this, '${batchId}')">Delete</button>
         </td>
     `;
     tbody.appendChild(row);
@@ -470,7 +465,7 @@ function savePayments() {
 }
 
 function loadPayments() {
-    const savedNames = JSON.parse(localStorage.getItem('paymentNames')) || { batch1: ['Vangie', 'Doy', 'Romy'], batch2: ['Vangie', 'Doy', 'Romy'] };
+    const savedNames = JSON.parse(localStorage.getItem('paymentNames')) || { batch1: ['Vangie', 'Doy', 'Omeng'], batch2: ['Vangie', 'Doy', 'Omeng'] };
     
     // Load Batch 1
     const batch1Tbody = document.getElementById('batch1Rows');
@@ -478,15 +473,15 @@ function loadPayments() {
     savedNames.batch1.forEach(name => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>
+            <td style="width:40%">
                 <input type="text" class="payment-name" value="${name}" maxlength="30" />
                 <span class="print-only">${name}</span>
             </td>
-            <td class="payment-amount-cell">
+            <td style="width:60%" class="payment-amount-cell">
                 <span class="payment-amount no-print">PHP 0.00</span>
                 <span class="payment-amount-print print-only"></span>
             </td>
-            <td class="no-print action-column">
+            <td style="width:0%" class="no-print action-column">
                 <button type="button" class="delete-payment danger" onclick="removePaymentRow(this, 'batch1')">Delete</button>
             </td>
         `;
@@ -499,15 +494,15 @@ function loadPayments() {
     savedNames.batch2.forEach(name => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>
+            <td style="width:40%">
                 <input type="text" class="payment-name" value="${name}" maxlength="30" />
                 <span class="print-only">${name}</span>
             </td>
-            <td class="payment-amount-cell">
+            <td style="width:60%" class="payment-amount-cell">
                 <span class="payment-amount no-print">PHP 0.00</span>
                 <span class="payment-amount-print print-only"></span>
             </td>
-            <td class="no-print action-column">
+            <td style="width:0%" class="no-print action-column">
                 <button type="button" class="delete-payment danger" onclick="removePaymentRow(this, 'batch2')">Delete</button>
             </td>
         `;
@@ -523,4 +518,34 @@ document.addEventListener('DOMContentLoaded', function() {
     loadDeductions(); // This will also attach listeners and calculate payments
     attachCurrencyInputListeners();
     loadPayments();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Add a function to fix print layout
+    window.fixPrintLayout = function() {
+        // For all tables, ensure action columns don't print
+        const actionColumns = document.querySelectorAll('.action-column');
+        actionColumns.forEach(col => {
+            col.classList.add('no-print');
+            col.style.width = '0%';
+        });
+        
+        // Ensure delete buttons don't print
+        const deleteButtons = document.querySelectorAll('.delete-deduction, .delete-payment, .danger');
+        deleteButtons.forEach(btn => {
+            btn.classList.add('no-print');
+        });
+        
+        // Fix specific section issues
+        document.querySelectorAll('#deductionRows td:nth-child(3), #batch1Rows td:nth-child(3), #batch2Rows td:nth-child(3)').forEach(cell => {
+            cell.classList.add('no-print', 'action-column');
+            cell.style.width = '0%';
+        });
+    };
+    
+    // Run the fix on page load
+    fixPrintLayout();
+    
+    // Also run before printing
+    window.addEventListener('beforeprint', fixPrintLayout);
 });

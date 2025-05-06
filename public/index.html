@@ -39,35 +39,35 @@
     </div>
     
     <div style="margin-bottom: 20px;" class="no-print"> 
-        <button onclick="window.print()">Print Page</button>
+        <button onclick="fixPrintLayout(); window.print()">Print Page</button>
     </div>
     
     <table id="deductionTable">
         <tr>
-            <td class="header" style="width:30%">Original Asking Price</td>
-            <td class="header" id="price" style="width:20%" colspan="2">PHP 500,000.00</td>
+            <td class="header" style="width:40%">Original Asking Price</td>
+            <td class="header" id="price" style="width:60%" colspan="2">PHP 500,000.00</td>
         </tr>
         <tr>
             <td colspan="3" style="font-weight: bold; font-size: 20px; text-align: left;">Deduction:</td>
         </tr>
         <tr>
-            <th style="width:30%">Name</th>
-            <th style="width:20%">Amount</th>
-            <th style="width:20%" class="action-column no-print">Action</th>
+            <th style="width:40%">Name</th>
+            <th style="width:60%">Amount</th>
+            <th style="width:0%" class="action-column no-print">Action</th>
         </tr>
         <tbody id="deductionRows">
             <tr>
-                <td><input type="text" value="Legal Documents" class="deduction-name" /></td>
-                <td><input type="number" value="6000" class="deduction-amount" min="0" step="any" /></td>
-                <td class="no-print"><button type="button" class="delete-deduction danger" onclick="removeDeductionRow(this)">Delete</button></td>
+                <td style="width:40%"><input type="text" value="Legal Documents" class="deduction-name" /></td>
+                <td style="width:60%"><input type="number" value="6000" class="deduction-amount" min="0" step="any" /></td>
+                <td style="width:0%" class="no-print action-column"><button type="button" class="delete-deduction danger no-print" onclick="removeDeductionRow(this)">Delete</button></td>
             </tr>
         </tbody>
         <tr>
             <td colspan="3" class="no-print" style="text-align: left;"><button type="button" onclick="addDeductionRow()">Add Deduction</button></td>
         </tr>
         <tr>
-            <td class="header">Total</td>
-            <td class="total" id="deductionTotal" colspan="2">PHP 0.00</td>
+            <td class="header" style="width:40%">Total</td>
+            <td class="total" id="deductionTotal" style="width:60%" colspan="2">PHP 0.00</td>
         </tr>
     </table>
 
@@ -81,9 +81,9 @@
             </td>
         </tr>
         <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th class="action-column no-print">Action</th>
+            <th style="width:40%">Name</th>
+            <th style="width:60%">Amount</th>
+            <th style="width:0%" class="action-column no-print">Action</th>
         </tr>
         <tbody id="batch1Rows"></tbody>
         <tr>
@@ -92,8 +92,8 @@
             </td>
         </tr>
         <tr>
-            <td class="subtotal" style="width: 30%;">Subtotal</td>
-            <td class="subtotal-amount" id="batch1Subtotal" colspan="2" style="text-align: left; padding-left: 20px;">PHP 0.00</td>
+            <td class="subtotal" style="width:40%;">Subtotal</td>
+            <td class="subtotal-amount" id="batch1Subtotal" style="width:60%" colspan="2">PHP 0.00</td>
         </tr>
     </table>
     
@@ -107,9 +107,9 @@
             </td>
         </tr>
         <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th class="action-column no-print">Action</th>
+            <th style="width:40%">Name</th>
+            <th style="width:60%">Amount</th>
+            <th style="width:0%" class="action-column no-print">Action</th>
         </tr>
         <tbody id="batch2Rows"></tbody>
         <tr>
@@ -118,32 +118,32 @@
             </td>
         </tr>
         <tr>
-            <td class="subtotal" style="width: 30%;">Subtotal</td>
-            <td class="subtotal-amount" id="batch2Subtotal" colspan="2" style="text-align: left; padding-left: 20px;">PHP 0.00</td>
+            <td class="subtotal" style="width:40%;">Subtotal</td>
+            <td class="subtotal-amount" id="batch2Subtotal" style="width:60%" colspan="2">PHP 0.00</td>
         </tr>
         <tr>
-            <td class="header" style="width: 30%;">Total</td>
-            <td class="total" id="initialTotal" colspan="2" style="text-align: left; padding-left: 20px;">PHP 150,000.00</td>
+            <td class="header" style="width:40%;">Total</td>
+            <td class="total" id="initialTotal" style="width:60%" colspan="2">PHP 150,000.00</td>
         </tr>
     </table>
     
     <h3>Balance Remaining</h3>
     <table>
         <tr>
-            <td class="header">Balance Remaining</td>
-            <td class="header highlight" id="balance">PHP 314,000.00</td>
+            <td class="header" style="width:40%">Balance Remaining</td>
+            <td class="header highlight" id="balance" style="width:60%">PHP 314,000.00</td>
         </tr>
         <tr>
-            <td><strong>Partition Per Person</strong></td>
-            <td class="highlight" id="partitionPP">PHP 104,666.67</td>
+            <td style="width:40%"><strong>Partition Per Person</strong></td>
+            <td class="highlight" id="partitionPP" style="width:60%">PHP 104,666.67</td>
         </tr>
         <tr>
-            <td>Billing Cycle</td>
-            <td id="billingCycle">Quarterly</td>
+            <td style="width:40%">Billing Cycle</td>
+            <td id="billingCycle" style="width:60%">Quarterly</td>
         </tr>
         <tr>
-            <td>Terms</td>
-            <td id="termDisplay">9 Months</td>
+            <td style="width:40%">Terms</td>
+            <td id="termDisplay" style="width:60%">9 Months</td>
         </tr>
     </table>
 
@@ -154,8 +154,8 @@
         </tbody>
         <tfoot>
             <tr>
-                <td><strong>Total</strong></td>
-                <td id="installmentTotal" class="highlight"><strong>PHP 0.00</strong></td>
+                <td style="width:40%"><strong>Total</strong></td>
+                <td style="width:60%" id="installmentTotal" class="highlight"><strong>PHP 0.00</strong></td>
             </tr>
         </tfoot>
     </table>
