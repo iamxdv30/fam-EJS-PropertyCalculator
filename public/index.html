@@ -15,7 +15,7 @@
     <div class="controls no-print">
         <div class="control-group">
             <label for="askingPrice">Original Asking Price (PHP):</label>
-            <input type="number" id="askingPrice" value="500000" min="0" step="1000">
+            <input type="text" id="askingPrice" value="500,000.00" class="currency-input">
         </div>
         
         <div class="control-group">
@@ -30,7 +30,7 @@
         
         <div class="control-group">
             <label for="initialPayment">Initial Payment (PHP):</label>
-            <input type="number" id="initialPayment" value="150000" min="0" step="1000">
+            <input type="text" id="initialPayment" value="150,000.00" class="currency-input">
         </div>
         
         <div class="control-group">
@@ -66,59 +66,65 @@
             <td colspan="3" class="no-print" style="text-align: left;"><button type="button" onclick="addDeductionRow()">Add Deduction</button></td>
         </tr>
         <tr>
-            <td colspan="2" class="header">Total</td>
+            <td class="header">Total</td>
             <td class="total" id="deductionTotal">PHP 0.00</td>
+            <td class="no-print"></td>
         </tr>
     </table>
 
     
     <h3>Initial Downpayment</h3>
-    <table>
+    <table id="batch1Table" class="payment-table">
         <tr>
-            <td colspan="2" class="header" style="font-weight: bold; width:30%">Batch 1 Partition (66.6666%)</td>
+            <td colspan="3" class="header" style="font-weight: bold;">
+                Batch 1 Partition
+                <input type="text" id="batch1Amount" class="currency-input" value="0.00" /> 
+            </td>
         </tr>
         <tr>
-            <td class="indent">Vangie</td>
-            <td id="vangie1">PHP 33,333.33</td>
+            <th>Name</th>
+            <th>Amount</th>
+            <th class="action-column no-print">Action</th>
+        </tr>
+        <tbody id="batch1Rows"></tbody>
+        <tr>
+            <td colspan="3" class="no-print" style="text-align: left;">
+                <button type="button" onclick="addPaymentRow('batch1')">Add Person</button>
+            </td>
         </tr>
         <tr>
-            <td class="indent">Doy</td>
-            <td id="doy1">PHP 33,333.33</td>
-        </tr>
-        <tr>
-            <td class="indent">Romy</td>
-            <td id="romy1">PHP 33,333.33</td>
-        </tr>
-        <tr>
-            <td class="subtotal">Subtotal</td>
-            <td id="batch1Subtotal">PHP 100,000.00</td>
+            <td class="subtotal" style="width: 30%;">Subtotal</td>
+            <td class="subtotal-amount" id="batch1Subtotal" colspan="2" style="text-align: left; padding-left: 20px;">PHP 0.00</td>
         </tr>
     </table>
     
     <div class="note">*After processing of legal documents</div>
-    <table>
+
+    <table id="batch2Table" class="payment-table">
         <tr>
-            <td colspan="2" class="header" style="font-weight: bold; width:30%">Batch 2 Partition (33.3333%)</td>
+            <td colspan="3" class="header" style="font-weight: bold;">
+                Batch 2 Partition
+                <span id="batch2Amount" class="currency-display">PHP 50,000.00</span>
+            </td>
         </tr>
         <tr>
-            <td class="indent">Vangie</td>
-            <td id="vangie2">PHP 16,666.67</td>
+            <th>Name</th>
+            <th>Amount</th>
+            <th class="action-column no-print">Action</th>
+        </tr>
+        <tbody id="batch2Rows"></tbody>
+        <tr>
+            <td colspan="3" class="no-print" style="text-align: left;">
+                <button type="button" onclick="addPaymentRow('batch2')">Add Person</button>
+            </td>
         </tr>
         <tr>
-            <td class="indent">Doy</td>
-            <td id="doy2">PHP 16,666.67</td>
+            <td class="subtotal" style="width: 30%;">Subtotal</td>
+            <td class="subtotal-amount" id="batch2Subtotal" colspan="2" style="text-align: left; padding-left: 20px;">PHP 0.00</td>
         </tr>
         <tr>
-            <td class="indent">Romy</td>
-            <td id="romy2">PHP 16,666.67</td>
-        </tr>
-        <tr>
-            <td class="subtotal">Subtotal</td>
-            <td id="batch2Subtotal">PHP 50,000.00</td>
-        </tr>
-        <tr>
-            <td class="header">Total</td>
-            <td class="total" id="initialTotal">PHP 150,000.00</td>
+            <td class="header" style="width: 30%;">Total</td>
+            <td class="total" id="initialTotal" colspan="2" style="text-align: left; padding-left: 20px;">PHP 150,000.00</td>
         </tr>
     </table>
     
@@ -129,7 +135,7 @@
             <td class="header highlight" id="balance">PHP 314,000.00</td>
         </tr>
         <tr>
-            <td>Partition Per Person</td>
+            <td><strong>Partition Per Person</strong></td>
             <td class="highlight" id="partitionPP">PHP 104,666.67</td>
         </tr>
         <tr>
@@ -144,26 +150,15 @@
 
     <h3>Installment Schedule per Person</h3>
     <table class="installment-schedule" id="installmentTable">
-        <tr id="payment1">
-            <td>Q1</td>
-            <td id="q1">PHP 34,888.89</td>
-        </tr>
-        <tr id="payment2">
-            <td>Q2</td>
-            <td id="q2">PHP 34,888.89</td>
-        </tr>
-        <tr id="payment3">
-            <td>Q3</td>
-            <td id="q3">PHP 34,888.89</td>
-        </tr>
-        <tr id="payment4">
-            <td>Q4</td>
-            <td id="q4">PHP 34,888.89</td>
-        </tr>
-        <tr>
-            <td class="subtotal">Total</td>
-            <td class="total" id="installmentTotal">PHP 104,666.67</td>
-        </tr>
+        <tbody id="installmentRows">
+            <!-- Quarters will be added dynamically -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td id="installmentTotal" class="highlight"><strong>PHP 0.00</strong></td>
+            </tr>
+        </tfoot>
     </table>
 </body>
 </html>

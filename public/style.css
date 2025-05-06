@@ -1,22 +1,29 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 10px;
-    max-width: 100%;
+    line-height: 1.4;
+    margin: 0;
+    padding: 15px;
+    background-color: #f5f5f5;
+    max-width: 8.5in;
     margin: 0 auto;
 }
 
 @media (min-width: 768px) {
     body {
         padding: 20px;
-        max-width: 800px;
+        max-width: 8.5in;
     }
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    font-size: 14px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    table-layout: fixed;
 }
 
 @media (max-width: 600px) {
@@ -26,10 +33,79 @@ table {
 }
 
 th, td {
-    padding: 10px 8px;
+    padding: 8px;
     text-align: left;
     vertical-align: middle;
     border-bottom: 1px solid #ddd;
+    background-color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 36px;
+}
+
+/* Column widths */
+th:first-child,
+td:first-child {
+    width: 30%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 50%;
+    text-align: left;
+    padding-left: 20px;
+}
+
+th:last-child,
+td:last-child {
+    width: 20%;
+}
+
+/* Input field constraints */
+.payment-name {
+    width: 100%;
+    max-width: 200px;
+}
+
+.payment-amount-cell {
+    white-space: nowrap;
+}
+
+/* Ensure amounts align properly */
+.payment-amount {
+    display: inline-block;
+    min-width: 120px;
+}
+
+/* Control input field size */
+.control-group {
+    flex: 1 0 100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.control-group input,
+.control-group select {
+    width: 100%;
+    min-width: 300px;
+    margin-top: 5px;
+}
+
+@media (min-width: 768px) {
+    .control-group {
+        flex: 1 0 45%;
+        margin-right: 5%;
+    }
+}
+
+input[type="text"].payment-name {
+    padding: 6px 8px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 180px;
+    box-sizing: border-box;
 }
 
 .action-column {
@@ -45,6 +121,7 @@ th, td {
 .header {
     font-weight: bold;
     background-color: #f2f2f2;
+    border-bottom: 2px solid #ddd;
 }
 
 .subtotal {
@@ -66,34 +143,93 @@ th, td {
 
 .controls {
     margin-bottom: 20px;
-    padding: 15px;
+    padding: 20px;
     background-color: #f9f9f9;
-    border-radius: 5px;
+    border-radius: 8px;
     display: flex;
     flex-wrap: wrap;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.control-group {
-    flex: 1 0 100%;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
+/* Input styles */
+.currency-input,
+.control-group input,
+.control-group select {
+    width: 100%;
+    min-width: 300px;
+    margin-top: 5px;
+}
+.deduction-amount,
+.deduction-name,
+.payment-name {
+    width: 150px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    color: #333;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-@media (min-width: 768px) {
-    .control-group {
-        flex: 1 0 45%;
-        margin-right: 5%;
-    }
+.currency-input:focus,
+.percentage-input:focus,
+.deduction-amount:focus,
+.deduction-name:focus,
+.payment-name:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.currency-input,
+.percentage-input,
+.deduction-amount {
+    text-align: right;
+}
+
+.payment-name,
+.deduction-name {
+    text-align: left;
+}
+
+/* Specific adjustments */
+.percentage-input {
+    width: 80px;
+    display: inline-block;
+    margin: 0 4px;
+}
+
+.currency-input {
+    text-align: right;
+    width: 120px;
+}
+
+.currency-display {
+    display: inline-block;
+    min-width: 120px;
+    padding: 2px 5px;
+    text-align: right;
+    background-color: #f5f5f5;
+    border-radius: 3px;
 }
 
 select, input {
     padding: 8px;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    margin: 0;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: 100%;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 5px rgba(76, 175, 80, 0.2);
 }
 
 button {
@@ -104,17 +240,25 @@ button {
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
 }
 
 .delete-deduction, .danger {
     background-color: #e53935 !important;
     color: #fff !important;
     border: none;
-    padding: 6px 14px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 3px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
     width: auto;
     margin: 0 auto;
     display: block;
@@ -140,7 +284,7 @@ button:hover {
 }
 
 .installment-schedule {
-    width: 100%;
+    width: 50%;
     margin: 0 auto;
 }
 
@@ -151,18 +295,42 @@ button:hover {
 }
 
 h2, h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 1.3em;
+}
+
+/* Hide print-only elements during normal view */
+.print-only {
+    display: none;
+}
+
+/* Table styles */
+#deductionRows td {
+    position: relative;
+}
+
+#deductionRows td input {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Add print-specific styles */
 @media print {
+    @page {
+        size: legal;
+        margin: 0.25in;
+    }
+
     body {
-        padding: 10px; /* Adjust padding for print if needed */
-        max-width: 100%;
-        font-size: 11pt !important;
+        padding: 0;
+        margin: 0;
+        width: 8in; /* 8.5in - 0.5in margins */
+        font-size: 9pt !important;
         color: black !important;
         background-color: white !important;
+        line-height: 1.2;
     }
 
     .no-print {
@@ -173,19 +341,80 @@ h2, h3 {
     input[type="text"],
     input[type="number"],
     select { /* Also hide select dropdowns */
-        border: none !important;
-        background-color: transparent !important;
-        box-shadow: none !important;
-        -webkit-appearance: none; /* Remove default browser styling */
-        -moz-appearance: none;
-        appearance: none;
+        display: none !important;
+    }
+
+    /* Show the input values in print */
+    .currency-input + .print-only,
+    .payment-name + .print-only {
+        display: inline-block !important;
+        padding: 2pt 4pt !important;
+    }
+
+    /* Ensure borders are visible */
+    table {
+        border-collapse: collapse;
+        border: 1px solid #000;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 2pt 4pt;
+    }
+
+    /* Ensure no cells are empty */
+    td:empty {
+        padding: 2pt 4pt;
+        height: 14pt;
+    }
+
+    /* Show currency values left-aligned */
+    .currency-input {
+        text-align: left !important;
+    }
+
+    /* Show print-only elements */
+    .print-only {
+        display: inline-block !important;
+        width: 100% !important;
+        color: black !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
         padding: 0 !important;
         margin: 0 !important;
-        width: auto !important; /* Allow content to determine width */
-        display: inline !important;
-        color: black !important; /* Ensure text color is visible */
-        font-size: inherit !important; /* Use parent font size */
-        font-family: inherit !important; /* Use parent font family */
+    }
+
+    /* Adjust table cell widths for print */
+    #deductionTable td:first-child {
+        width: 60% !important;
+    }
+
+    #deductionTable td:nth-child(2) {
+        width: 40% !important;
+    }
+    
+    /* Ensure deduction total aligns with amount column */
+    #deductionTable tr:last-child td:first-child {
+        text-align: right !important;
+        padding-right: 10px !important;
+    }
+    
+    #deductionTable tr:last-child td:last-child {
+        text-align: right !important;
+    }
+
+    /* Ensure proper text alignment */
+    .payment-table td:first-child .print-only {
+        text-align: left !important;
+    }
+
+    .payment-table td:nth-child(2) .print-only {
+        text-align: right !important;
+    }
+
+    /* Remove shadows in print */
+    table, .controls, button, input, select {
+        box-shadow: none !important;
     }
 
     /* Optional: Remove the arrows from number inputs */
@@ -195,12 +424,27 @@ h2, h3 {
         margin: 0;
     }
     input[type=number] {
-        -moz-appearance: textfield; /* Firefox */
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield; /* Standard */
+    }
+
+    table {
+        width: 100%;
+        margin-bottom: 0.15in;
+        page-break-inside: avoid;
     }
 
     table, th, td {
-        border: 1px solid #ccc; /* Add borders for print visibility if desired */
-        font-size: 10pt; /* Adjust font size for print */
+        border: 1px solid #000;
+        font-size: 9pt;
+        padding: 2pt 4pt;
+    }
+
+    h2, h3 {
+        margin: 0.1in 0;
+        page-break-after: avoid;
+        font-size: 10pt;
     }
 
     /* Ensure table layouts are simple for print */
