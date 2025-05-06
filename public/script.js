@@ -196,6 +196,11 @@ function calculatePayments() {
 
         // Get batch 1 amount
         let batch1Amount = unformatNumber(document.getElementById('batch1Amount').value) || 0;
+        // Update the print-only span for batch1Amount
+        const batch1AmountPrintSpan = document.getElementById('batch1AmountPrint');
+        if (batch1AmountPrintSpan) {
+            batch1AmountPrintSpan.textContent = formatNumber(batch1Amount); // Use the numeric value
+        }
         let batch2Amount = 0;
         
         // Validate batch1Amount
@@ -231,28 +236,44 @@ function calculatePayments() {
         const batch1PerPerson = uniqueBatch1Names.size > 0 ? batch1Amount / uniqueBatch1Names.size : 0;
         const batch2PerPerson = uniqueBatch2Names.size > 0 ? batch2Amount / uniqueBatch2Names.size : 0;
 
-        // Update amounts in batch 1
-        document.querySelectorAll('#batch1Rows tr').forEach((row, index) => {
-            const amountCell = row.querySelector('.payment-amount');
-            if (amountCell && index < batch1Names.length) {
-                const amount = formatCurrency(batch1PerPerson);
-                amountCell.innerHTML = `${amount}<span class="print-only">${amount}</span>`;
-            }
-        });
+        let totalBatch1Amount = 0;
+        let totalBatch2Amount = 0;
 
-        // Update amounts in batch 2
-        document.querySelectorAll('#batch2Rows tr').forEach((row, index) => {
-            const amountCell = row.querySelector('.payment-amount');
-            if (amountCell && index < batch2Names.length) {
-                const amount = formatCurrency(batch2PerPerson);
-                amountCell.innerHTML = `${amount}<span class="print-only">${amount}</span>`;
-            }
-        });
+        // Distribute batch1Amount among batch1Names
+        if (batch1Names.length > 0) {
+            const amountPerPersonBatch1 = batch1Amount / batch1Names.length;
+            document.querySelectorAll('#batch1Rows tr').forEach(row => {
+                const screenAmountSpan = row.querySelector('.payment-amount');
+                const printAmountSpan = row.querySelector('.payment-amount-print');
+                if (screenAmountSpan) {
+                    screenAmountSpan.textContent = formatCurrency(amountPerPersonBatch1);
+                }
+                if (printAmountSpan) {
+                    printAmountSpan.textContent = formatCurrency(amountPerPersonBatch1);
+                }
+                totalBatch1Amount += amountPerPersonBatch1;
+            });
+        }
+        document.getElementById('batch1Subtotal').textContent = formatCurrency(totalBatch1Amount);
 
-        // Update subtotals and total - use original batch amounts
-        document.getElementById('batch1Subtotal').textContent = formatCurrency(batch1Amount);
-        document.getElementById('batch2Subtotal').textContent = formatCurrency(batch2Amount);
-        document.getElementById('initialTotal').textContent = formatCurrency(initialPaymentTotal);
+        // Distribute batch2Amount among batch2Names
+        if (batch2Names.length > 0) {
+            const amountPerPersonBatch2 = batch2Amount / batch2Names.length;
+            document.querySelectorAll('#batch2Rows tr').forEach(row => {
+                const screenAmountSpan = row.querySelector('.payment-amount');
+                const printAmountSpan = row.querySelector('.payment-amount-print');
+                if (screenAmountSpan) {
+                    screenAmountSpan.textContent = formatCurrency(amountPerPersonBatch2);
+                }
+                if (printAmountSpan) {
+                    printAmountSpan.textContent = formatCurrency(amountPerPersonBatch2);
+                }
+                totalBatch2Amount += amountPerPersonBatch2;
+            });
+        }
+        document.getElementById('batch2Subtotal').textContent = formatCurrency(totalBatch2Amount);
+
+        document.getElementById('initialTotal').textContent = formatCurrency(totalBatch1Amount + totalBatch2Amount);
 
         // Calculate remaining balance
         const balance = askingPrice - deductionTotal - initialPaymentTotal;
@@ -396,7 +417,8 @@ function addPaymentRow(batchId) {
             <span class="print-only"></span>
         </td>
         <td class="payment-amount-cell">
-            <span class="payment-amount">PHP 0.00</span>
+            <span class="payment-amount no-print">PHP 0.00</span>
+            <span class="payment-amount-print print-only"></span>
         </td>
         <td class="no-print action-column">
             <button type="button" class="delete-payment danger" onclick="removePaymentRow(this, '${batchId}')">Delete</button>
@@ -461,7 +483,8 @@ function loadPayments() {
                 <span class="print-only">${name}</span>
             </td>
             <td class="payment-amount-cell">
-                <span class="payment-amount">PHP 0.00</span>
+                <span class="payment-amount no-print">PHP 0.00</span>
+                <span class="payment-amount-print print-only"></span>
             </td>
             <td class="no-print action-column">
                 <button type="button" class="delete-payment danger" onclick="removePaymentRow(this, 'batch1')">Delete</button>
@@ -481,7 +504,8 @@ function loadPayments() {
                 <span class="print-only">${name}</span>
             </td>
             <td class="payment-amount-cell">
-                <span class="payment-amount">PHP 0.00</span>
+                <span class="payment-amount no-print">PHP 0.00</span>
+                <span class="payment-amount-print print-only"></span>
             </td>
             <td class="no-print action-column">
                 <button type="button" class="delete-payment danger" onclick="removePaymentRow(this, 'batch2')">Delete</button>

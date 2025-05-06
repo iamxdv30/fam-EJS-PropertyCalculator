@@ -345,24 +345,61 @@ h2, h3 {
     }
 
     /* Show the input values in print */
-    .currency-input + .print-only,
+    #batch1AmountPrint, /* Specifically target the new span for batch1Amount */
+    .currency-input + .print-only, /* General rule if still needed elsewhere */
     .payment-name + .print-only {
         display: inline-block !important;
         padding: 2pt 4pt !important;
+        /* Ensure it inherits text properties for consistency */
+        color: black !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        background-color: transparent !important; /* Ensure no conflicting background */
+        border: none !important; /* No border on the span itself */
+        vertical-align: middle;
     }
 
-    /* Ensure borders are visible */
+    /* Align deduction names to the left and amounts to the right in print */
+    #deductionRows td:first-child .print-only, /* Targets print-only span in the first cell (Name) of deduction rows */
+    input.deduction-name + span.print-only { 
+        text-align: left !important;
+    }
+
+    #deductionRows td:nth-child(2) .print-only, /* Targets print-only span in the second cell (Amount) */
+    input.deduction-amount + span.print-only {
+        text-align: right !important;
+    }
+
+    /* Ensure borders are visible and complete */
     table {
         border-collapse: collapse;
-        border: 1px solid #000;
+        border: 1px solid #000; /* Ensure table itself has a border */
+        width: 100%;
+        margin-bottom: 0.15in;
+        page-break-inside: avoid;
+        table-layout: auto !important; /* Add this for better print rendering of borders */
     }
 
     th, td {
-        border: 1px solid #000;
+        border: 1px solid #000 !important; /* Important to override other potential border styles */
         padding: 2pt 4pt;
+        font-size: 9pt;
+        /* Reset problematic inherited styles for print */
+        overflow: visible !important; 
+        text-overflow: clip !important; /* or 'clip' if 'visible' isn't enough */
+        white-space: normal !important; /* Allow text to wrap */
+        vertical-align: middle; /* Align content vertically */
+        word-wrap: break-word; /* Break long words if necessary */
+        height: auto !important; /* Ensure height adjusts to content for print */
+        box-sizing: border-box !important; /* Better layout calculation */
     }
 
-    /* Ensure no cells are empty */
+    /* Ensure td with colspan also has complete borders */
+    td[colspan] {
+        border: 1px solid #000 !important; 
+    }
+
+    /* Ensure no cells are empty visually, though content might be empty */
     td:empty {
         padding: 2pt 4pt;
         height: 14pt;
@@ -375,16 +412,19 @@ h2, h3 {
 
     /* Show print-only elements */
     .print-only {
-        display: inline-block !important;
-        width: 100% !important;
+        display: inline-block !important; /* This is a general fallback */
+        width: auto !important; /* Adjust width as needed, auto might be better than 100% */
         color: black !important;
         font-size: inherit !important;
         font-family: inherit !important;
-        padding: 0 !important;
+        padding: 0 !important; /* Reset padding if not specifically set above */
         margin: 0 !important;
+        background-color: transparent !important;
+        border: none !important;
+        vertical-align: middle;
     }
 
-    /* Adjust table cell widths for print */
+    /* Adjust table cell widths for print if necessary - example from before */
     #deductionTable td:first-child {
         width: 60% !important;
     }
@@ -394,12 +434,13 @@ h2, h3 {
     }
     
     /* Ensure deduction total aligns with amount column */
-    #deductionTable tr:last-child td:first-child {
-        text-align: right !important;
-        padding-right: 10px !important;
+    #deductionTable tr:last-child td:first-child { /* This is the 'Total' label cell */
+        text-align: left !important; 
+        padding-right: 10px !important; /* Retain padding if needed */
     }
     
-    #deductionTable tr:last-child td:last-child {
+    #deductionTable tr:last-child td:last-child, /* This is the 'Total' amount cell */
+    #deductionTable tr:last-child td#deductionTotal { /* More specific for the colspan case */
         text-align: right !important;
     }
 
