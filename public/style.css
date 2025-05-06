@@ -690,3 +690,52 @@ h2, h3 {
         font-weight: bold !important;
     }
 }
+
+
+@media print {
+    /* Make total amounts bold when printed */
+    #deductionTotal, 
+    #initialTotal,
+    #balance,
+    #partitionPP,
+    #installmentTotal,
+    .total,
+    .highlight,
+    td.total,
+    .subtotal-amount,
+    .highlight strong,
+    #installmentTotal strong {
+        font-weight: bold !important;
+        /* Increase font size slightly for better emphasis */
+        font-size: 9.5pt !important;
+    }
+    
+    /* Extra reinforcement for specific bold amounts */
+    .total *, 
+    .highlight *,
+    #installmentTotal *,
+    #deductionTotal *,
+    #initialTotal *,
+    #partitionPP * {
+        font-weight: bold !important;
+    }
+    
+    /* Fix for total cells with colspan */
+    td.total[colspan="2"],
+    td.subtotal-amount[colspan="2"],
+    #deductionTotal,
+    #initialTotal,
+    #balance,
+    #partitionPP,
+    #installmentTotal {
+        text-align: right !important;
+        padding-right: 15px !important;
+        font-weight: bold !important;
+    }
+    
+    /* Target specific cells that should be bold */
+    tr:last-child td:last-child:not(.action-column),
+    tfoot tr td:last-child:not(.action-column) {
+        font-weight: bold !important;
+    }
+}
