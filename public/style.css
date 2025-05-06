@@ -317,184 +317,502 @@ h2, h3 {
 }
 
 /* Add print-specific styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.4;
+    margin: 0;
+    padding: 15px;
+    background-color: #f5f5f5;
+    max-width: 8.5in;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    body {
+        padding: 20px;
+        max-width: 8.5in;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    font-size: 13px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+@media (max-width: 600px) {
+    table {
+        font-size: 12px;
+    }
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 36px;
+}
+
+/* Column widths */
+th:first-child,
+td:first-child {
+    width: 30%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 50%;
+    text-align: left;
+    padding-left: 20px;
+}
+
+th:last-child,
+td:last-child {
+    width: 20%;
+}
+
+/* Input field constraints */
+.payment-name {
+    width: 100%;
+    max-width: 200px;
+}
+
+.payment-amount-cell {
+    white-space: nowrap;
+}
+
+/* Ensure amounts align properly */
+.payment-amount {
+    display: inline-block;
+    min-width: 120px;
+}
+
+/* Control input field size */
+.control-group {
+    flex: 1 0 100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.control-group input,
+.control-group select {
+    width: 100%;
+    min-width: 300px;
+    margin-top: 5px;
+}
+
+@media (min-width: 768px) {
+    .control-group {
+        flex: 1 0 45%;
+        margin-right: 5%;
+    }
+}
+
+input[type="text"].payment-name {
+    padding: 6px 8px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 180px;
+    box-sizing: border-box;
+}
+
+.action-column {
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    th, td {
+        padding: 10px;
+    }
+}
+
+.header {
+    font-weight: bold;
+    background-color: #f2f2f2;
+    border-bottom: 2px solid #ddd;
+}
+
+.subtotal {
+    font-weight: bold;
+}
+
+.total {
+    font-weight: bold;
+    background-color: #ffff00;
+}
+
+.highlight {
+    background-color: #ffff00;
+}
+
+.indent {
+    padding-left: 20px;
+}
+
+.controls {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Input styles */
+.currency-input,
+.control-group input,
+.control-group select {
+    width: 100%;
+    min-width: 300px;
+    margin-top: 5px;
+}
+.deduction-amount,
+.deduction-name,
+.payment-name {
+    width: 150px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    color: #333;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.currency-input:focus,
+.percentage-input:focus,
+.deduction-amount:focus,
+.deduction-name:focus,
+.payment-name:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.currency-input,
+.percentage-input,
+.deduction-amount {
+    text-align: right;
+}
+
+.payment-name,
+.deduction-name {
+    text-align: left;
+}
+
+/* Specific adjustments */
+.percentage-input {
+    width: 80px;
+    display: inline-block;
+    margin: 0 4px;
+}
+
+.currency-input {
+    text-align: right;
+    width: 120px;
+}
+
+.currency-display {
+    display: inline-block;
+    min-width: 120px;
+    padding: 2px 5px;
+    text-align: right;
+    background-color: #f5f5f5;
+    border-radius: 3px;
+}
+
+select, input {
+    padding: 8px;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 5px rgba(76, 175, 80, 0.2);
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+}
+
+.delete-deduction, .danger {
+    background-color: #e53935 !important;
+    color: #fff !important;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+#deductionTable tbody tr td:last-child {
+    text-align: center; /* Center the button within its cell */
+}
+
+.delete-deduction:hover, .danger:hover {
+    background-color: #b71c1c !important;
+}
+
+@media (min-width: 768px) {
+    button {
+        width: auto;
+        margin-top: 20px;
+    }
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.installment-schedule {
+    width: 50%;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .installment-schedule {
+        width: 50%;
+    }
+}
+
+h2, h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 1.3em;
+}
+
+/* Hide print-only elements during normal view */
+.print-only {
+    display: none;
+}
+
+/* Table styles */
+#deductionRows td {
+    position: relative;
+}
+
+#deductionRows td input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* UPDATED PRINT STYLES - REPLACE THE EXISTING PRINT STYLES COMPLETELY */
 @media print {
     @page {
-        size: legal;
+        size: legal portrait;
         margin: 0.25in;
     }
 
     body {
-        padding: 0;
-        margin: 0;
-        width: 8in; /* 8.5in - 0.5in margins */
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 7.5in !important; /* Adjusted to account for margins */
         font-size: 9pt !important;
         color: black !important;
         background-color: white !important;
-        line-height: 1.2;
+        line-height: 1.2 !important;
     }
-
+    
+    /* Complete reset of table properties for print */
+    table {
+        width: 100% !important;
+        max-width: 100% !important;
+        border: 1px solid black !important;
+        border-collapse: collapse !important; /* Critical for connected borders */
+        border-spacing: 0 !important; /* Ensure no spacing between cells */
+        margin-bottom: 0.15in !important;
+        page-break-inside: avoid !important;
+        table-layout: fixed !important; /* Fixed layout prevents browser recalculation */
+        box-shadow: none !important;
+        border-radius: 0 !important; /* Remove any border radius */
+        overflow: visible !important; /* Allow content to be visible */
+    }
+    
+    /* Reset all cell borders to be solid black */
+    th, td {
+        border: 1px solid black !important;
+        border-collapse: collapse !important;
+        padding: 4pt !important;
+        font-size: 9pt !important;
+        text-align: left !important;
+        vertical-align: middle !important;
+        height: auto !important;
+        min-height: 12pt !important;
+        word-wrap: break-word !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        text-overflow: clip !important;
+        box-sizing: border-box !important;
+        background-color: transparent !important;
+    }
+    
+    /* Reinforce all border sides explicitly */
+    th, td {
+        border-top: 1px solid black !important;
+        border-bottom: 1px solid black !important;
+        border-left: 1px solid black !important;
+        border-right: 1px solid black !important;
+    }
+    
+    /* Force right borders to be visible and aligned */
+    th:last-child, td:last-child {
+        border-right: 1px solid black !important;
+    }
+    
+    /* Handle header and special cells */
+    .header {
+        background-color: #f2f2f2 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color: black !important;
+    }
+    
+    /* Handle highlighted cells */
+    .highlight, .total {
+        background-color: #ffff00 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* Fix subtotal formatting */
+    .subtotal, .subtotal-amount {
+        border: 1px solid black !important;
+        font-weight: bold !important;
+    }
+    
+    /* Fix cells with colspan */
+    td[colspan], th[colspan] {
+        border: 1px solid black !important;
+    }
+    
+    /* Show print-only elements and hide screen elements */
     .no-print {
-        display: none !important; /* Hide elements marked for no printing */
-    }
-
-    /* Make inputs look like static text */
-    input[type="text"],
-    input[type="number"],
-    select { /* Also hide select dropdowns */
         display: none !important;
     }
-
-    /* Show the input values in print */
-    #batch1AmountPrint, /* Specifically target the new span for batch1Amount */
-    .currency-input + .print-only, /* General rule if still needed elsewhere */
+    
+    .print-only {
+        display: inline-block !important;
+        width: auto !important;
+        color: black !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        background-color: transparent !important;
+        border: none !important;
+        vertical-align: middle !important;
+    }
+    
+    /* Hide form elements */
+    input, select, button {
+        display: none !important;
+    }
+    
+    /* Display printed values */
+    #batch1AmountPrint,
+    .currency-input + .print-only,
     .payment-name + .print-only {
         display: inline-block !important;
         padding: 2pt 4pt !important;
-        /* Ensure it inherits text properties for consistency */
         color: black !important;
         font-size: inherit !important;
-        font-family: inherit !important;
-        background-color: transparent !important; /* Ensure no conflicting background */
-        border: none !important; /* No border on the span itself */
-        vertical-align: middle;
+        background-color: transparent !important;
     }
-
-    /* Align deduction names to the left and amounts to the right in print */
-    #deductionRows td:first-child .print-only, /* Targets print-only span in the first cell (Name) of deduction rows */
+    
+    /* Text alignment for deduction rows */
+    #deductionRows td:first-child .print-only,
     input.deduction-name + span.print-only { 
         text-align: left !important;
     }
-
-    #deductionRows td:nth-child(2) .print-only, /* Targets print-only span in the second cell (Amount) */
+    
+    #deductionRows td:nth-child(2) .print-only,
     input.deduction-amount + span.print-only {
         text-align: right !important;
     }
-
-    /* Ensure borders are visible and complete */
-    table {
-        border-collapse: collapse;
-        border: 1px solid #000; /* Ensure table itself has a border */
-        width: 100%;
-        margin-bottom: 0.15in;
-        page-break-inside: avoid;
-        table-layout: auto !important; /* Add this for better print rendering of borders */
-    }
-
-    th, td {
-        border: 1px solid #000 !important; /* Important to override other potential border styles */
-        padding: 2pt 4pt;
-        font-size: 9pt;
-        /* Reset problematic inherited styles for print */
-        overflow: visible !important; 
-        text-overflow: clip !important; /* or 'clip' if 'visible' isn't enough */
-        white-space: normal !important; /* Allow text to wrap */
-        vertical-align: middle; /* Align content vertically */
-        word-wrap: break-word; /* Break long words if necessary */
-        height: auto !important; /* Ensure height adjusts to content for print */
-        box-sizing: border-box !important; /* Better layout calculation */
-    }
-
-    /* Ensure td with colspan also has complete borders */
-    td[colspan] {
-        border: 1px solid #000 !important; 
-    }
-
-    /* Ensure no cells are empty visually, though content might be empty */
-    td:empty {
-        padding: 2pt 4pt;
-        height: 14pt;
-    }
-
-    /* Show currency values left-aligned */
-    .currency-input {
-        text-align: left !important;
-    }
-
-    /* Show print-only elements */
-    .print-only {
-        display: inline-block !important; /* This is a general fallback */
-        width: auto !important; /* Adjust width as needed, auto might be better than 100% */
-        color: black !important;
-        font-size: inherit !important;
-        font-family: inherit !important;
-        padding: 0 !important; /* Reset padding if not specifically set above */
-        margin: 0 !important;
-        background-color: transparent !important;
-        border: none !important;
-        vertical-align: middle;
-    }
-
-    /* Adjust table cell widths for print if necessary - example from before */
-    #deductionTable td:first-child {
-        width: 60% !important;
-    }
-
-    #deductionTable td:nth-child(2) {
-        width: 40% !important;
-    }
     
-    /* Ensure deduction total aligns with amount column */
-    #deductionTable tr:last-child td:first-child { /* This is the 'Total' label cell */
-        text-align: left !important; 
-        padding-right: 10px !important; /* Retain padding if needed */
-    }
-    
-    #deductionTable tr:last-child td:last-child, /* This is the 'Total' amount cell */
-    #deductionTable tr:last-child td#deductionTotal { /* More specific for the colspan case */
-        text-align: right !important;
-    }
-
-    /* Ensure proper text alignment */
+    /* Text alignment for payment table */
     .payment-table td:first-child .print-only {
         text-align: left !important;
     }
-
+    
     .payment-table td:nth-child(2) .print-only {
         text-align: right !important;
     }
-
-    /* Remove shadows in print */
-    table, .controls, button, input, select {
+    
+    /* Properly size the installment table */
+    .installment-schedule {
+        width: 60% !important;
+        margin: 0 auto !important;
+        border: 1px solid black !important;
+    }
+    
+    /* Format the note correctly */
+    .note {
+        font-size: 8pt !important;
+        margin: 2pt 0 5pt 0 !important;
+        page-break-before: avoid !important;
+    }
+    
+    /* Header formatting */
+    h2, h3 {
+        margin: 0.1in 0 !important;
+        page-break-after: avoid !important;
+        font-size: 10pt !important;
+    }
+    
+    /* Critical fix for table row borders */
+    tr {
+        page-break-inside: avoid !important;
+        border: 1px solid black !important;
+    }
+    
+    /* Remove any browser default table borders/spacing */
+    table, tr, th, td, thead, tbody, tfoot {
+        -webkit-box-shadow: none !important;
         box-shadow: none !important;
     }
-
-    /* Optional: Remove the arrows from number inputs */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    input[type=number] {
-        -webkit-appearance: textfield;
-        -moz-appearance: textfield;
-        appearance: textfield; /* Standard */
-    }
-
-    table {
-        width: 100%;
-        margin-bottom: 0.15in;
-        page-break-inside: avoid;
-    }
-
-    table, th, td {
-        border: 1px solid #000;
-        font-size: 9pt;
-        padding: 2pt 4pt;
-    }
-
-    h2, h3 {
-        margin: 0.1in 0;
-        page-break-after: avoid;
-        font-size: 10pt;
-    }
-
-    /* Ensure table layouts are simple for print */
-    .controls, .control-group {
-        display: block; 
-    }
-
-    /* Hide specific columns if necessary */
-    #deductionTable .action-column {
-        display: none;
+    
+    /* Ensure yellow highlights print properly */
+    .total, .highlight {
+        background-color: #ffff00 !important;
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
     }
 }
